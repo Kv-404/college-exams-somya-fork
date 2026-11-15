@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { Github, Instagram, Sun, Moon, Database } from 'lucide-react';
 import { Analytics } from '@vercel/analytics/react';
+import GradientASCII from './components/GradientASCII';
 import Search from './components/Search';
 import ScheduleCard from './components/ScheduleCard';
 import ScheduleSkeleton from './components/ScheduleSkeleton';
@@ -132,7 +133,19 @@ function App() {
   const home = !selectedStudent;
 
   return (
-    <div className="flex min-h-screen min-h-dvh flex-col bg-desk text-ink">
+    <div className="relative flex min-h-screen min-h-dvh flex-col bg-desk text-ink">
+      {theme === 'dark' && (
+        <div className="pointer-events-none fixed inset-0 z-0 print:hidden" aria-hidden="true">
+          <GradientASCII
+            colors={['#1e3fd8', '#f6f8ff', '#a5d8ff', '#38bdf8']}
+            shape="horizon"
+            characters=" =+xX0S8#@"
+            cellSize={18}
+            density={0.8}
+            style={{ width: '100%', height: '100%' }}
+          />
+        </div>
+      )}
       <header
         className="sticky top-0 z-40 border-b border-rule bg-desk/90 backdrop-blur-md print:hidden"
         style={{ paddingTop: 'env(safe-area-inset-top)' }}
@@ -170,8 +183,8 @@ function App() {
 
       <main
         className={home
-          ? 'flex w-full flex-1 flex-col items-center justify-center px-4 py-12 text-center'
-          : 'mx-auto w-full max-w-6xl flex-1 px-4 pt-8 sm:pt-14 lg:px-6 lg:pt-16'}
+          ? 'relative z-10 flex w-full flex-1 flex-col items-center justify-center px-4 py-12 text-center'
+          : 'relative z-10 mx-auto w-full max-w-6xl flex-1 px-4 pt-8 sm:pt-14 lg:px-6 lg:pt-16'}
       >
         {home && (
           <div className="rise flex w-full max-w-xl flex-col items-center">
@@ -217,7 +230,7 @@ function App() {
       </main>
 
       <footer
-        className="rise d5 print:hidden mt-auto flex flex-wrap items-center justify-center gap-2 border-t border-rule/40 px-4 py-4 text-xs text-ink-soft"
+        className="rise d5 print:hidden relative z-10 mt-auto flex flex-wrap items-center justify-center gap-2 border-t border-rule/40 px-4 py-4 text-xs text-ink-soft"
         style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
       >
         <span>
